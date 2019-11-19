@@ -1,2 +1,6 @@
-# One liner to import Framwork , on the fly.
-# > TODO
+# publish to local script repository and install as a module 
+# https://docs.microsoft.com/en-us/powershell/scripting/gallery/how-to/working-with-local-psrepositories?view=powershell-6
+# -- create local share
+# -- register the moduel on the share
+# -- install the module from the share at any time
+# -- Deploy GPO based on security grtoup to allow access to the share and to automatically register the share as a repository 
