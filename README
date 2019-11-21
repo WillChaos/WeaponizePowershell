@@ -1,4 +1,4 @@
-# Framework is being built with the below in mind
+# Framework is being built with the below in mind (despite being hack and slashy in nature)
 # 1. Run completely from memory - doesnt touch the disk unless and export option is visibly selected
 # 2. Will be X platform (powershell core) 
 #    > https://powershell.org/2019/02/tips-for-writing-cross-platform-powershell-code/
