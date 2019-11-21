@@ -2,5 +2,5 @@
 # 1. Run completely from memory - doesnt touch the disk unless and export option is visibly selected
 # 2. Will be X platform (powershell core) 
 #    > https://powershell.org/2019/02/tips-for-writing-cross-platform-powershell-code/
-# 3. will be built to automate redteam tasks (weather it is to priv esc, or be used remotely to run exploits)
-# 4. Should be 'windows defender-proof '
+# 3. will be built to automate redteam tasks (wether it is to priv esc, or be used remotely to run exploits)
+# 4. Should be 'windows defender-resistent
