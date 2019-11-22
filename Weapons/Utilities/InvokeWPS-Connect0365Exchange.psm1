@@ -12,6 +12,7 @@ Function InvokeWPS-Connect0365Exchange()
                                      -ErrorAction Stop `
                                      -WarningAction SilentlyContinue `
                                      -InformationAction SilentlyContinue
+            Import-PSSession $Session -DisableNameChecking
 
             Write-Host "[WPS]> Connected to 0365 Exchange!" -ForegroundColor DarkGreen                          
                                      
