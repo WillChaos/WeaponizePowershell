@@ -68,17 +68,13 @@ Function WPSInvoke-SelfInmemory
 
   [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression') | Out-Null
 
-  # download zip - store content as bytes in mem
+  # download zip - store content as bytes (in mem)
   $ZipBytes   = (Invoke-WebRequest -Uri $WPS_MasterLocation).content
 
-  # build a Zip object, and write the bytes into the zip object - also in mem
+  # build a Zip object, and write the bytes into the zip object (in mem)
   $ZipStream  = New-Object System.IO.Memorystream
   $ZipStream.Write($ZipBytes,0,$ZipBytes.Length)
-
-  # define Archive type from newly built zip/byte stream object
   $ZipArchive = New-Object System.IO.Compression.ZipArchive($ZipStream)
-
-  # store references of the contents of zip 9so we can opperate on it)
   $ZippedContent = $ZipArchive.Entries
 
   # opperate on each item in the zip
@@ -103,6 +99,7 @@ Function WPSInvoke-SelfInmemory
         }
         if($IsWindows)
         {
+            # i didnt specify pwsh.exe because id like the ability to be able to use PS3+ on windows as its generally more available
             Invoke-Command -ScriptBlock {powershell.exe -command $ItemContent} | Out-Null
         }
     }
