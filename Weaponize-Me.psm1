@@ -87,17 +87,26 @@ Function WPSInvoke-SelfInmemory
     # if the zip items contain a powershell file or module, do the below (that isnt the main module
     if(($Zippeditem.FullName -like "*Ps1") -or ($Zippeditem.FullName -like "*psm1") -and ($Zippeditem.FullName -notlike "*Weaponize-Me.psm1"))
     {
-        
         Write-Host "[+] Importing module: "$Zippeditem.FullName -ForegroundColor DarkMagenta
         # open zip item type in memory - store string based contents into a file
         $EntryReader = New-Object System.IO.StreamReader($Zippeditem.Open())
         $ItemContent  = $EntryReader.ReadToEnd()
 
         #import ps module contents into this shell
-        Invoke-Command -ScriptBlock {$ItemContent} | Out-Null
+        if($IsMacOS)
+        {
+            Invoke-Command -ScriptBlock {pwsh -command $ItemContent} | Out-Null
+        }
+        if($IsLinux)
+        {
+            Invoke-Command -ScriptBlock {pwsh -command $ItemContent} | Out-Null
+        }
+        if($IsWindows)
+        {
+            Invoke-Command -ScriptBlock {powershell.exe -command $ItemContent} | Out-Null
+        }
     }
   }
-
 }
 
 #-----------------------------------------------------------[Execution]------------------------------------------------------------
