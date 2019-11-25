@@ -89,7 +89,7 @@ Function WPSInvoke-SelfInmemory
         $ItemContent  = $EntryReader.ReadToEnd()
 
         #import ps module contents into this shell
-        Invoke-Expression $ItemContent | Out-Null
+        Invoke-Expression $ItemContent
     }
   }
 }
