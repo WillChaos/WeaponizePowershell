@@ -98,3 +98,4 @@ Function WPSInvoke-SelfInmemory
 
 WPSInvoke-WPSBanner
 WPSConfigure-preReqs
+WPSInvoke-SelfInmemory
