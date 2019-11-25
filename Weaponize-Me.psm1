@@ -89,19 +89,7 @@ Function WPSInvoke-SelfInmemory
         $ItemContent  = $EntryReader.ReadToEnd()
 
         #import ps module contents into this shell
-        if($IsMacOS)
-        {
-            Invoke-Command -ScriptBlock {pwsh -command $ItemContent} | Out-Null
-        }
-        if($IsLinux)
-        {
-            Invoke-Command -ScriptBlock {pwsh -command $ItemContent} | Out-Null
-        }
-        if($IsWindows)
-        {
-            # i didnt specify pwsh.exe because id like the ability to be able to use PS3+ on windows as its generally more available
-            Invoke-Command -ScriptBlock {powershell.exe -command $ItemContent} | Out-Null
-        }
+        Invoke-Expression $ItemContent | Out-Null
     }
   }
 }
