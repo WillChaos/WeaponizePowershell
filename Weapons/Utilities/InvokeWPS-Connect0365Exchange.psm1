@@ -21,7 +21,6 @@ Function InvokeWPS-Connect0365Exchange()
         {
             Write-Host "[WPS]> Failed to connect to 0365 Exchange - Auth failure?" -ForegroundColor DarkRed
         }
- 
 }
 
-Export-ModuleMember -Function InvokeWPS-Connect0365Exchange -Alias Connect0365Exchange
+
