@@ -1,4 +1,4 @@
-Function InvokeWPS-Connect0365Exchange()
+Function Global:InvokeWPS-Connect0365Exchange()
 {
     $Credential = Get-Credential
 
