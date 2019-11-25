@@ -23,3 +23,5 @@ Function InvokeWPS-Connect0365Exchange()
         }
  
 }
+
+Export-ModuleMember -Function InvokeWPS-Connect0365Exchange -Alias Connect0365Exchange
