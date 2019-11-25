@@ -17,7 +17,8 @@ Function Global:InvokeWPS-EnumWLANCredentials()
 
   foreach($SSID in $WLAN_GREP_DATA)
   {
-
+      Write-Host "[WPS]> Dumping WLAN info (Run as admin for passwords)"
+      
       # Information extraction command
       $Exec = "netsh wlan show profiles name=""$SSID"" key=clear"
       $Thisprofile = Invoke-Expression $Exec 
