@@ -5,6 +5,7 @@
 #    > https://powershell.org/2019/02/tips-for-writing-cross-platform-powershell-code/
 # 3. will be built to automate redteam tasks, Blueteam tasks and some everyday tasks
 # 4. Should be 'windows defender-resistent
+# 5. Weapons (importable functions) mostly are importable independantly as powershell modules
 
 # -------------------------------------Execution------------------------------------------------
   (not yet working)
