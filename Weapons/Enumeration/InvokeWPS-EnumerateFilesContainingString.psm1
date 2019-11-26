@@ -2,8 +2,12 @@ Function Global:InvokeWPS-EnumerateFilesContainingString()
 {
     param
     (
+    [Parameter(Mandatory=$true)]
     [String[]] $StringsToSearch,
+    
     [String[]] $FileTypes,
+    
+    [Parameter(Mandatory=$true)]
     [String]   $RootSearchDirectory
     
 
@@ -21,18 +25,48 @@ Function Global:InvokeWPS-EnumerateFilesContainingString()
                        "*.asp",
                        "*.php",
                        "*.bak",
+                       "*.back",
                        "*.backup",
                        "*.default",
-                       "*.cs"
+                       "*.cs",
+                       "*.php",
+                       "*.php5",
+                       "*.doc",
+                       "*.docx",
+                       "*.html",
+                       "*.htm",
+                       "*.py",
+                       "*.cfm",
+                       "*.xml",
+                       "*.cgi",
+                       "*.shtml",
+                       "*.rb",
+                       "*.js",
+                       "*.jsp",
+                       "*.action",
+                       "*.hta",
+                       "*.htaccess",
+                       "*.c",
+                       "*.lua",
+                       "*.r",
+                       "*.rss",
+                       "*.sh",
+                       "*.vb",
+                       "*.xaml",
+                       "*.yaml"
+
+
+
+
          Write-Host "[WPS]> Filetpe param not specifed - using defaults" -ForegroundColor Black
     }
     Write-Host "[WPS]> Recursive String enumeration started..." -ForegroundColor DarkMagenta
 
-    Foreach ($String in $StringsToSearch)
+    Foreach ($sw in $StringsToSearch)
     {
         
         Get-Childitem -Path $RootSearchDirectory -Recurse -include $FileTypes | 
-        Select-String -Pattern "$String" | 
-        Select Path,LineNumber,@{n='SearchWord';e={$String}}
+        Select-String -Pattern "$sw" | 
+        Select Path,LineNumber,@{n='SearchWord';e={$sw}}
     }
 }
