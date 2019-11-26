@@ -9,7 +9,7 @@
   
 #>
 
-Function Global:InvokeWPS-EnumWLANCredentials()
+Function Global:InvokeWPS-EnumerateWLANCredentials()
 {
   # Get all Wirless profiles - and format appropriately. 
   $WLAN_PROFILES      = netsh wlan show profiles | Select-String -Pattern "All User Profile" | Foreach-Object {$_.ToString()}
