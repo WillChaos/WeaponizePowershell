@@ -325,7 +325,7 @@ Function Global:InvokeWPS-Report0365Exchange()
 
     Function Build-Report()
     {
-
+	Write-Host "[?] Not yet complete..."
     }
     # -------------------------------------Execution------------------------------------------------
     StagepreReqs
