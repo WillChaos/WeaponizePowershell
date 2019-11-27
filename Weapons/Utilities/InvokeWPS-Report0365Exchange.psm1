@@ -6,7 +6,7 @@
 .PARAMETER 
   Outpath   - Directory in which to write the report to. If Nothing specified, it will write in the current working directory.
   LogoURL   - The URL directing to a WEB hosting image to be used as a logo for the report. Default will be used if not specified.
-  LogoURL2  - Second logo
+  LogoURL2  - Second logo - similar to above. 
   Enable2FA - Set this switch if we require 2fa auth to the tennant  
 .INPUTS
   None / Script is interactive
