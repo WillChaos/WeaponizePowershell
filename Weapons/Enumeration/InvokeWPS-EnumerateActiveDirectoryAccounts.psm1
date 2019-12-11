@@ -58,13 +58,12 @@ Function Global:InvokeWPS-EnumerateActiveDirectoryAccounts()
         Write-Host "[+] Begun building Activity report for all AD users" -ForegroundColor DarkGreen
 
         Get-ADUser -Filter 'enabled -eq $true' -Properties * | Select-Object -Property Name, 
-            @{Name="Account Created";Expression="WhenCreated"}, 
-            @{Name="Password last reset";Expression="PasswordLastSet"}, 
+            @{Name="AccountCreated";Expression="WhenCreated"}, 
+            @{Name="PasswordLastReset";Expression="PasswordLastSet"}, 
             @{Name="LogonCount";Expression="LogonCount"}, 
-            @{Name="Total failed logons";Expression="msDS-FailedInteractiveLogonCount"},
-            @{Name="Recent failed logons";Expression="msDS-FailedInteractiveLogonCountAtLastSuccessfulLogon"}, 
-            @{Name="Last failed logon";Expression={[datetime]::FromFileTime($_.'msDS-LastFailedInteractiveLogonTime')}}, 
-            @{Name="Last successful logon";Expression={[datetime]::FromFileTime($_.'msDS-LastSuccessfulInteractiveLogonTime')}} | 
-        Sort-Object Name | Format-Table
+            @{Name="TotalFailedLogons";Expression="msDS-FailedInteractiveLogonCount"},
+            @{Name="RecentFailedLogons";Expression="msDS-FailedInteractiveLogonCountAtLastSuccessfulLogon"}, 
+            @{Name="LastFailedLogon";Expression={[datetime]::FromFileTime($_.'msDS-LastFailedInteractiveLogonTime')}}, 
+            @{Name="LastSuccessfulLogon";Expression={[datetime]::FromFileTime($_.'LastLogon')}} 
     }
 }
