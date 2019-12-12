@@ -152,6 +152,18 @@ Function Global:InvokeWPS-Report0365Exchange()
             Import-PSSession $Session -DisableNameChecking
 
             Write-Host "[WPS]> Connected to 0365 Exchange!" -ForegroundColor DarkGreen
+
+            try
+            {
+                Connect-AzureAD -Credential $Credential
+                Write-Host "[WPS]> Connected to AzureAD!" -ForegroundColor DarkGreen
+            }
+            catch
+            {
+                Write-Host "[WPS]> Failed to connect to AzureAD - Auth failure?" -ForegroundColor DarkRed
+                return $false
+            }
+
             return $true                          
                                      
         }
@@ -310,13 +322,13 @@ Function Global:InvokeWPS-Report0365Exchange()
 
         # Poll for intial tennant data
         $AllUsers    = Get-AzureADUser         -All:$true
-        $CompanyInfo = Get-AzureADTenantDetail -All
+        $CompanyInfo = Get-AzureADTenantDetail -All:$true
 
         # Set company info
-        $CompanyName = $CompanyInfo.DisplayName
+        $CompanyName = $CompanyInfo.DisplayName                | Out-String
         $TechEmail   = $CompanyInfo.TechnicalNotificationMails | Out-String
-        $DirSync     = $CompanyInfo.DirSyncEnabled
-        $LastDirSync = $CompanyInfo.CompanyLastDirSyncTime
+        $DirSync     = $CompanyInfo.DirSyncEnabled             | Out-String
+        $LastDirSync = $CompanyInfo.CompanyLastDirSyncTime     | Out-String
         
         # we are up to here..
 
