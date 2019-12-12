@@ -3,6 +3,7 @@
   InvokeWPS-Report0365Exchange.psm1
 .DESCRIPTION
   Connects to 0365 exchange admin center and builds an extencisve report for Security, Sales and general auditing. 
+  Template taken from: https://www.thelazyadministrator.com/2018/06/22/create-an-interactive-html-report-for-office-365-with-powershell/ (thanks)
 .PARAMETER 
   Outpath   - Directory in which to write the report to. If Nothing specified, it will write in the current working directory.
   LogoURL   - The URL directing to a WEB hosting image to be used as a logo for the report. Default will be used if not specified.
@@ -184,8 +185,10 @@ Function Global:InvokeWPS-Report0365Exchange()
 
     Function Poll-Datasets()
     {
-
-
+        # ___________________________________________________________________________________ #
+        #                        Create Objects to fill for reporting                         #
+        # ___________________________________________________________________________________ #
+        # ----------------------------------------------------------------------------------- #
         $Table                = New-Object 'System.Collections.Generic.List[System.Object]'
         $LicenseTable         = New-Object 'System.Collections.Generic.List[System.Object]'
         $UserTable            = New-Object 'System.Collections.Generic.List[System.Object]'
@@ -202,7 +205,14 @@ Function Global:InvokeWPS-Report0365Exchange()
         $CompanyInfoTable     = New-Object 'System.Collections.Generic.List[System.Object]'
         $MessageTraceTable    = New-Object 'System.Collections.Generic.List[System.Object]'
         $DomainTable          = New-Object 'System.Collections.Generic.List[System.Object]'
+        # ----------------------------------------------------------------------------------- #
 
+
+
+
+        # ___________________________________________________________________________________ #
+        #                 Create Default names for licencing / SKU's                          #
+        # ___________________________________________________________________________________ #
         $Sku = @{
              "O365_BUSINESS_ESSENTIALS"           = "Office 365 Business Essentials"
              "O365_BUSINESS_PREMIUM"              = "Office 365 Business Premium"
@@ -320,24 +330,174 @@ Function Global:InvokeWPS-Report0365Exchange()
              "FLOW_P2"                            = "Microsoft Flow Plan 2"
             }
 
-        # Poll for intial tennant data
+
+
+
+
+        # ___________________________________________________________________________________ #
+        #                          Poll for intial tennant data                               #
+        # ___________________________________________________________________________________ #
         $AllUsers    = Get-AzureADUser         -All:$true
         $CompanyInfo = Get-AzureADTenantDetail -All:$true
-
-        # Set company info
-        $CompanyName = $CompanyInfo.DisplayName                | Out-String
-        $TechEmail   = $CompanyInfo.TechnicalNotificationMails | Out-String
-        $DirSync     = $CompanyInfo.DirSyncEnabled             | Out-String
-        $LastDirSync = $CompanyInfo.CompanyLastDirSyncTime     | Out-String
         
-        # we are up to here..
 
+
+
+        # ___________________________________________________________________________________ #
+        #                             Tennant information                                     #
+        # ___________________________________________________________________________________ #
+        
+        # ---------------------------------General------------------------------------------- #
+        $CompanyName      = $CompanyInfo.DisplayName                | Out-String
+        $TechEmail        = $CompanyInfo.TechnicalNotificationMails | Out-String
+        $DirSync          = $CompanyInfo.DirSyncEnabled             | Out-String
+        $LastDirSync      = $CompanyInfo.CompanyLastDirSyncTime     | Out-String
+        
+        If($DirSync -eq $Null)
+        {
+            $LastDirSync      = "N/A"
+            $DirSync          = "Not Enabled"
+        }
+
+     
+        $ThisObj = [PSCustomObject]
+        @{
+            'Company Name'          = $CompanyName
+            'Technical E-mail'      = $TechEmail
+            'Directory Sync status' = $DirSync
+            'Last Directory Sync'   = $LastDirSync
+        }
+
+        $CompanyInfoTable.add($ThisObj)
+
+
+
+        # ----------------------------Get tennant admins------------------------------------- #
+        $Admins = Get-AzureADDirectoryRoleMember -ObjectId 
+        (
+            Get-AzureADDirectoryRole | Where-Object { $_.DisplayName -match "Company Administrator" }
+
+        ).ObjectId
+        Foreach ($Admin in $Admins)
+        {
+         $Name = $Admin.DisplayName
+         $EmailAddress = $Admin.Mail
+         if (($admin.assignedlicenses.SkuID) -ne $Null)
+         {
+         $Licensed = $True
+         }
+         else
+         {
+         $Licensed = $False
+         }
+ 
+         $ThisObj = [PSCustomObject]
+         @{
+         'Name'       = $Name
+         'Is Licensed'   = $Licensed
+         'E-Mail Address'   = $EmailAddress
+         }
+ 
+         $GlobalAdminTable.add($ThisObj)
+ 
+        }
+
+
+
+
+        # ----------------------------Strong Password Disabled----------------------------- #
+        $LooseUsers = $AllUsers | Where-Object { $_.PasswordPolicies -eq "DisableStrongPassword" }
+            Foreach ($LooseUser in $LooseUsers)
+            {
+                 $NameLoose = $LooseUser.DisplayName
+                 $UPNLoose = $LooseUser.UserPrincipalName
+                 $StrongPasswordLoose = "False"
+                 if (($LooseUser.assignedlicenses.SkuID) -ne $Null)
+                 {
+                    $LicensedLoose = $true
+                 }
+                 else
+                 {
+                    $LicensedLoose = $false
+                 }
+ 
+                 $ThisObj = [PSCustomObject]
+                 @{
+                    'Name'                      = $NameLoose
+                    'UserPrincipalName'         = $UPNLoose
+                    'Is Licensed'               = $LicensedLoose
+                    'Strong Password Required'  = $StrongPasswordLoose
+                  }
+ 
+                 $StrongPasswordTable.add($ThisObj)
+
+                 If (($StrongPasswordTable).count -eq 0)
+                 {
+                     $StrongPasswordTable = [PSCustomObject]@{
+                     'Information'  = 'Information: No Users were found with Strong Password Enforcement disabled'
+                 }
+             }
+
+
+
+
+            # ------------------------------------ Message Trace ----------------------------------- #
+            $RecentMessages = Get-MessageTrace
+                
+            Foreach ($RecentMessage in $RecentMessages)
+            {
+                $TraceDate = $RecentMessage.Received
+                $Sender    = $RecentMessage.SenderAddress
+                $Recipient = $RecentMessage.RecipientAddress
+                $Subject   = $RecentMessage.Subject
+                $Status    = $RecentMessage.Status
+ 
+                $ThisObj = [PSCustomObject]
+                @{
+                'Received Date'        = $TraceDate
+                'E-Mail Subject'       = $Subject
+                'Sender'               = $Sender
+                'Recipient'            = $Recipient
+                'Status'               = $Status
+                }
+ 
+            $MessageTraceTable.add($ThisObj)
+            }
+
+            If (($MessageTraceTable).count -eq 0)
+            {
+                $MessageTraceTable = [PSCustomObject]
+                @{
+                'Information'      = 'Information: No recent E-Mails were found'
+                 }
+            }
+
+
+    # ----------------------------------------- Domains  ----------------------------------------- #
+    $Domains = Get-AzureAdDomain
+    foreach ($Domain in $Domains)
+    {
+     $DomainName = $Domain.Name
+     $Verified = $Domain.IsVerified
+     $DefaultStatus = $Domain.IsDefault
+ 
+     $obj = [PSCustomObject]@{
+     'Domain Name'   = $DomainName
+     'Verification Status'   = $Verified
+     'Default'       = $DefaultStatus
+     }
+ 
+     $DomainTable.add($obj)
+    }
+
+
+}
 
     }
 
     Function Build-Report()
     {
-	Write-Host "[?] Not yet complete..."
+	    Write-Host "[?] Not yet complete..."
     }
     # -------------------------------------Execution------------------------------------------------
     StagepreReqs
