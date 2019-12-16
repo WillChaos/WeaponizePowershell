@@ -41,7 +41,7 @@ Function Global:InvokeWPS-EnumeratePersistentApps()
         {
             if(Test-Path $FileObject)
             {
-                Get-ChildItem "$FileObject" 
+                Get-ChildItem "$FileObject" | Select Name, CreationTime
             }
         }
 
