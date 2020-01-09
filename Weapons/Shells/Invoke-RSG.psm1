@@ -47,8 +47,8 @@ $Windows_RevShells =
 
 Example execution for result: 
 Powershell.exe #> Windows_RevShells.Python
-[0]> example 1
-[1]> example 2
+#[0]> example 1
+#[1]> example 2
 
 #>
 
