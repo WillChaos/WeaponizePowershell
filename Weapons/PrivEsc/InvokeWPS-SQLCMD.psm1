@@ -55,6 +55,7 @@ Function Global:InvokeWPS-SQLCMD(){
             catch
             {
                 Write-Host "[WPS] Unable to import Powershell SqlServer tools. (try to manuelly import sqlserver module and see what happens)" -ForegroundColor DarkRed
+                exit
             }
             
         }
