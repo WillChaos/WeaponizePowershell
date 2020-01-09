@@ -88,7 +88,15 @@ Function Global:InvokeWPS-SQLCMD(){
     else
     {
         Write-Host "[WPS] No Payload parametres selected, performing general enumeration." -ForegroundColor Green
-        Invoke-Sqlcmd -ServerInstance $RHost -Query "@@version" 
-
+        try
+        {
+            $result = Invoke-Sqlcmd -ServerInstance $RHost -Query "@@version" -ErrorAction stop
+            $result
+        }
+        catch
+        {
+            Write-Host "[WPS] ERROR response below "
+            $result
+        }
     }
 }
