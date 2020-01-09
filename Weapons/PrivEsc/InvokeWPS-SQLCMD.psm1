@@ -92,10 +92,6 @@ Function Global:InvokeWPS-SQLCMD(){
         {
             Invoke-Sqlcmd -ServerInstance $RHost -Query "@@version" -ErrorAction Stop 
         }
-        catch [ManagedBatchParser.ParserException]
-        {
-            Write-Host "[WPS] ERROR: Permission/Connectivity issue." -ForegroundColor DarkRed
-        }
         catch
         {
             Write-Host "[WPS] ERROR: Unkown generic error when attempting to send SQLCMD command: '@@Version'" -ForegroundColor DarkRed
