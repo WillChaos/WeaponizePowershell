@@ -10,17 +10,16 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
     $hours - simply pass in how many hours to search back. so if you pass in 3, we will look over the past 3 hours
              for any lockouts/failed logins.
 #>
-
-    $ID_LO = @(4740,644,6279)     # Account locked out.
-    $ID_AU = @(4767)              # Account unlocked.
-    $ID_FL = @(4625,529)          # Failed Logon because of bad password	
-   
     param
     (  
         [Parameter(Position=0,Mandatory=$true)]
         [String] $Hours
     )
-
+    
+    $ID_LO = @(4740,644,6279)     # Account locked out.
+    $ID_AU = @(4767)              # Account unlocked.
+    $ID_FL = @(4625,529)          # Failed Logon because of bad password	
+   
     Write-Host "[WPS]> Checking for potential brute forceing..."
 
     try
