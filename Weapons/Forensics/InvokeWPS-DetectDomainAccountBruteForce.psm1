@@ -18,7 +18,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
     param
     (  
         [Parameter(Position=0,Mandatory=$true)]
-        [string] $Hours
+        [String] $Hours
     )
 
     Write-Host "[WPS]> Checking for potential brute forceing..."
