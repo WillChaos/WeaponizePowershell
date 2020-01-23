@@ -38,12 +38,14 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                 $target   = (($log).ReplacementStrings)[1]
                 $timegen  =   $log.TimeGenerated
                 $timewrit =   $log.TimeWritten
+                $eventid  =   $log.InstanceId
 
                 # present info
                 Write-Host "[+] $name failed logon"                          -ForegroundColor Green
                 Write-Host "-[*] Time Generated: $timegen"                   -ForegroundColor Gray
                 Write-Host "-[*] Time Written: $timewrit"                    -ForegroundColor Gray
                 Write-Host "-[*] target devcie locking out against: $target" -ForegroundColor Gray
+                Write-Host "-[*] Log Event ID : $eventid"                    -ForegroundColor Gray
                 Write-Host "-"
             }
             
@@ -58,12 +60,14 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                 $target   = (($log).ReplacementStrings)[1]
                 $timegen  =   $log.TimeGenerated
                 $timewrit =   $log.TimeWritten
+                $eventid  =   $log.InstanceId
 
                 # present info
-                Write-Host "[+] $name was locked out"                          -ForegroundColor Green
+                Write-Host "[+] $name was locked out"                        -ForegroundColor Green
                 Write-Host "-[*] Time Generated: $timegen"                   -ForegroundColor Gray
                 Write-Host "-[*] Time Written: $timewrit"                    -ForegroundColor Gray
                 Write-Host "-[*] target devcie locking out against: $target" -ForegroundColor Gray
+                Write-Host "-[*] Log Event ID : $eventid"                    -ForegroundColor Gray
                 Write-Host "-"
             }
         }
