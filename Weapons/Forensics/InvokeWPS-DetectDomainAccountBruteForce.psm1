@@ -20,7 +20,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
     $ID_AU = @(4767)              # Account unlocked.
     $ID_FL = @(4625,529)          # Failed Logon because of bad password	
    
-    Write-Host "[WPS]> Checking for potential brute forceing..."
+    Write-Host "[WPS]> Checking for potential brute forceing..." -ForegroundColor Green
 
     try
     {
