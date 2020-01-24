@@ -30,7 +30,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
 
     try
     {
-        if($result = Get-EventLog -LogName Security -After (Get-Date).AddHours(-$Hours) -InstanceId $ID_FL -ErrorAction SilentlyContinue)
+        if($result = Get-EventLog -LogName Security -After (Get-Date).AddHours(-$Hours) -InstanceId $ID_FL -ErrorAction SilentlyContinue -EntryType FailureAudit)
         {
             Write-Host "------------------------ Failed Logons in the past $Hours hours ------------------------------" -ForegroundColor DarkGray
             foreach($log in $result)
@@ -96,6 +96,26 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                     Write-Host "-[*] Process assosiated with lockout: $locproc"  -ForegroundColor Gray
                     Write-Host "-"
                }
+               if($log.InstanceId -like "*4768*")
+               {
+                    # get info
+                    $name       = (($log).ReplacementStrings)[0]
+                    $target     = (($log).ReplacementStrings)[9] 
+                    $failcode   = (($log).ReplacementStrings)[6] + ":" + (($log).ReplacementStrings)[7]
+                    $timegen    =   $log.TimeGenerated
+                    $timewrit   =   $log.TimeWritten
+                    $eventid    =   $log.InstanceId
+                    
+
+                    # present info
+                    Write-Host "[+] $name failed logon"                          -ForegroundColor Green
+                    Write-Host "-[*] Time Generated: $timegen"                   -ForegroundColor Gray
+                    Write-Host "-[*] Time Written: $timewrit"                    -ForegroundColor Gray
+                    Write-Host "-[*] lockout destination: $target"               -ForegroundColor Gray
+                    Write-Host "-[*] Log Event ID : $eventid"                    -ForegroundColor Gray
+                    Write-Host "-[*] Failure Code: : $failcode"                  -ForegroundColor Gray
+                    Write-Host "-"
+               }
                if($log.InstanceId -like "*4771*")
                {
                     # get info
@@ -116,29 +136,21 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                     Write-Host "-[*] Failure Code: : $failcode"                  -ForegroundColor Gray
                     Write-Host "-"
                }
+               if($log.InstanceId -like "*529*")
+               {
+                Write-Host "[?] Found log 529 (related to local sam file - we havent added loggin abilty for this yet, add it now with the samples in eventvwr.msc)" -ForegroundColor DarkGray
+                Write-Host " - "
+               }
                else
                {
-                    # catches some geenric event logs
-                    # get info
-                    $name     = (($log).ReplacementStrings)[0]
-                    $target   = (($log).ReplacementStrings)[1]
-                    $timegen  =   $log.TimeGenerated
-                    $timewrit =   $log.TimeWritten
-                    $eventid  =   $log.InstanceId
-
-                    # present info
-                    Write-Host "[+] $name failed logon"                                         -ForegroundColor Green
-                    Write-Host "-[*] Time Generated: $timegen"                                  -ForegroundColor Gray
-                    Write-Host "-[*] Time Written: $timewrit"                                   -ForegroundColor Gray
-                    Write-Host "-[*] target devcie locking out against: $target"                -ForegroundColor Gray
-                    Write-Host "-[*] Log Event ID : $eventid"                                   -ForegroundColor Gray
-                    Write-Host "NOTE: This event hasnt been coded into the script properly yet" -ForegroundColor Gray
-                    Write-Host "-"
+                    Write-Host "[?] LOG id landed in 'else' statement for unkwon reason? : "$log.InstanceId -ForegroundColor DarkGray
+                    Write-host " _ "
                }
+               
             }
             
         }
-        elseif($result = Get-EventLog -LogName Security -After (Get-Date).AddHours(-$Hours) -InstanceId $ID_LO -ErrorAction SilentlyContinue)
+        elseif($result = Get-EventLog -LogName Security -After (Get-Date).AddHours(-$Hours) -InstanceId $ID_LO -ErrorAction SilentlyContinue -EntryType FailureAudit)
         {
             Write-Host "---------------------- Accounts locked out in the past $Hours hours ---------------------------" -ForegroundColor DarkGray
             foreach($log in $result)
