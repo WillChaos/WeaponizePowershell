@@ -58,7 +58,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                if($log.InstanceId -like "*4769*")
                {
                     # get info
-                    $name     = (($log).ReplacementStrings)[1]
+                    $name     = (($log).ReplacementStrings)[0]
                     $target   = (($log).ReplacementStrings)[6] + ":" + (($log).ReplacementStrings)[7]
                     $errcode  = (($log).ReplacementStrings)[8]
                     $timegen  =   $log.TimeGenerated
