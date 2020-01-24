@@ -18,7 +18,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
     # Event IDS
     $ID_LO = @(4740,644,6279)                  # Account locked out.
     $ID_AU = @(4767)                           # Account unlocked.
-    $ID_FL = @(529,4776,4769,4625,4768,4771)  # Failed Logon because of bad password	
+    $ID_FL = @(529,4776,4769,4625,4768,4771)   # Failed Logon because of bad password	
    
     # Error codes (WIP)
     $0xc000006a = ("0xc000006a: username is correct, but the password is wrong")
@@ -36,7 +36,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
             foreach($log in $result)
             {
                #handling formating of different logs
-               if($log.InstanceId -like 4776)
+               if($log.InstanceId -like "*4776*")
                {
                     # get info
                     $name     = (($log).ReplacementStrings)[1]
@@ -55,7 +55,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                     Write-Host "-[*] Logon Error code: : $errcode"               -ForegroundColor Gray
                     Write-Host "-"
                }
-               if($log.InstanceId -like 4769)
+               if($log.InstanceId -like "*4769*")
                {
                     # get info
                     $name     = (($log).ReplacementStrings)[1]
@@ -74,7 +74,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                     Write-Host "-[*] Logon Error code: : $errcode"               -ForegroundColor Gray
                     Write-Host "-"
                }
-               if($log.InstanceId -like 4625)
+               if($log.InstanceId -like "*4625*")
                {
                     # get info
                     $name       = (($log).ReplacementStrings)[5]
@@ -96,7 +96,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                     Write-Host "-[*] Process assosiated with lockout: $locproc"  -ForegroundColor Gray
                     Write-Host "-"
                }
-               if($log.InstanceId -like 4771)
+               if($log.InstanceId -like "*4771*")
                {
                     # get info
                     $name       = (($log).ReplacementStrings)[0]
