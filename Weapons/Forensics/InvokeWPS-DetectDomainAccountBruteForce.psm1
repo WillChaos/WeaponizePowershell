@@ -141,11 +141,7 @@ Function Global:InvokeWPS-DetectDomainAccountBruteForce()
                 Write-Host "[?] Found log 529 (related to local sam file - we havent added loggin abilty for this yet, add it now with the samples in eventvwr.msc)" -ForegroundColor DarkGray
                 Write-Host " - "
                }
-               else
-               {
-                    Write-Host "[?] LOG id landed in 'else' statement for unkwon reason? : "$log.InstanceId -ForegroundColor DarkGray
-                    Write-host " _ "
-               }
+               
                
             }
             
