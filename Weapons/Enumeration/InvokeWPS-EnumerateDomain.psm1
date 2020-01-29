@@ -16,8 +16,8 @@ Function Global:InvokeWPS-EnumerateDomain()
             $MXName     = $MXRecord.Name
             $MXNE       = $MXRecord.NameExchange
             $MXIP       = (Resolve-DnsName -Name $MXNE -Type A -ErrorAction SilentlyContinue).IP4Address
-
-            Write-Host "-[$MXPriority] $MXName | $MXNE > $MXIP" -ForegroundColor DarkGray
+            $ASN        = (wget https://api.hackertarget.com/aslookup/?q=$MXIP -ErrorAction SilentlyContinue)
+            Write-Host "-[$MXPriority] $MXName | $MXNE > $MXIP ($ASN)" -ForegroundColor DarkGray
         }
     }
 
@@ -32,7 +32,7 @@ Function Global:InvokeWPS-EnumerateDomain()
             $AIP       = $ARecord.IP4Address
             $ASN       = (wget https://api.hackertarget.com/aslookup/?q=$AIP -ErrorAction SilentlyContinue)
 
-            Write-Host "-[A] $AName > $AIP | ($ASN)" -ForegroundColor DarkGray
+            Write-Host "-[A] $AName > $AIP ($ASN)" -ForegroundColor DarkGray
         }
 
     }
@@ -43,7 +43,7 @@ Function Global:InvokeWPS-EnumerateDomain()
             $AName     = $ARecord.Name
             $AIP       = $ARecord.IP4Address
             $ASN       = (wget https://api.hackertarget.com/aslookup/?q=$AIP -ErrorAction SilentlyContinue)
-            Write-Host "-[A] $AName > $AIP | ($ASN)" -ForegroundColor DarkGray
+            Write-Host "-[A] $AName > $AIP ($ASN)" -ForegroundColor DarkGray
         }
 
     }
