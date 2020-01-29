@@ -51,6 +51,4 @@ Function Global:InvokeWPS-EnumerateDomain()
     # .TXT / _DMARC / _DKIM
 
     # Whois
-
-    return $EnumOBJ
 }
