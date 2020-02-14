@@ -4,6 +4,9 @@
 .DESCRIPTION
   This payload dumps keys in clear text for saved WLAN profiles.
   The payload must be run from as administrator to get the keys.
+.TargetOS
+  OS:WIN
+
 .EXAMPLE
   PS > InvokeWPS-EnumWLANCredentials.psm1
   
