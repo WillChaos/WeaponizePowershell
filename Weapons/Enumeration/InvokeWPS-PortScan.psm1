@@ -58,7 +58,7 @@ Function Global:InvokeWPS-PortScan()
 			}
 			else
 			{
-				Write-Host "[WPS} ERROR: Nmap not installed. apt-get install nmap?"
+				Write-Host "[WPS] ERROR: Nmap not installed. apt-get install nmap?"
 				return $false
 			}
 		}
