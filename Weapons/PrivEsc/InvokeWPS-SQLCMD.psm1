@@ -11,6 +11,8 @@
   $EnableSQLCMD     = enabled SQLCMD (requires local access to the machien to execute)
 .OUTPUTS
   WARING: sqlcmd will be staged using the powershell gallery (technically touches disk)
+.TargetOS
+  OS:WIN
 .NOTES
   Version:        0.7
   Author:         WillChaos
