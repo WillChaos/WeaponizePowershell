@@ -9,6 +9,8 @@
   None / Script is interactive
 .OUTPUTS
   None
+.TargetOS
+  OS:ALL
 .NOTES
   Version:        0.7
   Author:         WillChaos
