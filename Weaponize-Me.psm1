@@ -26,12 +26,12 @@
 #>
 
 #---------------------------------------------------------[Initialisations]--------------------------------------------------------
-
+$CurrentOS = [System.Environment]::OSVersion.Platform
 
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 # Location for WPS ZIP Master in gitgub
-    $WPS_MasterLocation = "https://codeload.github.com/WillChaos/WeaponizePowershell/zip/master"
-    $CurrentOS          = [System.Environment]::OSVersion.Platform
+$WPS_MasterLocation = "https://codeload.github.com/WillChaos/WeaponizePowershell/zip/master"
+    
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
 Function WPSInvoke-WPSBanner
 {
@@ -88,16 +88,16 @@ Function WPSInvoke-SelfInmemory
         $ItemContent  = $EntryReader.ReadToEnd()
 
         # handle Os dependant scripts - import only as NIX script if specified
-        if($ItemContent -like "*OS:NIX*" -and $CurrentOS -like "Unix")
+        if($ItemContent -like "*OS:NIX*" -and $CurrentOS -notlike "Unix")
         {
             #import ps module contents into this shell - targetting linux
-            Write-Host "-[>] Importing module: "$Zippeditem.FullName  -ForegroundColor DarkGray
+            Write-Host "-[>] Skipping Windows exclusive module: "$Zippeditem.FullName  -ForegroundColor Gray
             Invoke-Expression $ItemContent
         }
-        if($ItemContent -like "*OS:WIN*" -and $CurrentOS -like "Win32NT")
+        if($ItemContent -like "*OS:WIN*" -and $CurrentOS -notlike "Win32NT")
         {
             #import ps module contents into this shell - targetting windows
-            Write-Host "-[>] Importing module: "$Zippeditem.FullName -ForegroundColor DarkGray
+            Write-Host "-[>] Skipping Linux exclusive module: "$Zippeditem.FullName -ForegroundColor Gray
             Invoke-Expression $ItemContent
         }
         else
