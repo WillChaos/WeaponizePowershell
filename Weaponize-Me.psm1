@@ -90,21 +90,19 @@ Function WPSInvoke-SelfInmemory
         # handle Os dependant scripts - import only as NIX script if specified
         if($ItemContent -like "*OS:NIX*" -and $CurrentOS -notlike "Unix")
         {
-            #import ps module contents into this shell - targetting linux
-            Write-Verbose "-[X] Skipping Windows exclusive module: "$Zippeditem.FullName  
+            # The module is a linux module but we are on windows. skip.
         }
         if($ItemContent -like "*OS:WIN*" -and $CurrentOS -notlike "Win32NT")
         {
-            #import ps module contents into this shell - targetting windows
-            Write-Verbose "-[X] Skipping Linux exclusive module: "$Zippeditem.FullName 
+            # The module is a Windows module but we are on Linux. skip.
         }
         else
         {
-            #import ps module contents into this shell - always import modules - including undefined ones - assume the module works on all OS's
+            # We either havent sepcified the OS type in the module, or - 
+            # We have specified it and we are on the correct OS. either way, Import!
             Write-Host "-[>] Importing module: "$Zippeditem.FullName  -ForegroundColor DarkGray
             Invoke-Expression $ItemContent
-        }
-        
+        } 
     }
   }
 }
