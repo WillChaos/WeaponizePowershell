@@ -6,6 +6,8 @@
   Simply enumerates OS for installed software / apps - as well as searching common startup locations for peristent apps/malware
 .OUTPUTS
   N/A
+.TargetOS
+  OS:WIN
 .NOTES
   Version:        0.7
   Author:         WillChaos
