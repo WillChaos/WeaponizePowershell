@@ -1,3 +1,8 @@
+<#
+.TargetOS
+  OS:WIN
+#>
+
 Function Global:InvokeWPS-EnumerateActiveDirectoryAccounts()
 {
     param
