@@ -76,9 +76,8 @@ Function Global:InvokeWPS-PortScan()
 		if($VeryQuickScan -and $RHost)
 		{
 			Write-Host "[+]> Performing Very quick scan" -ForeGroundColor DarkGray
-            $ScanArgs = "sudo masscan --ports 0-65535 $RHost --rate 1000"
-
-            Invoke-Expression -Command $ScanArgs
+            		$ScanArgs = "sudo masscan --ports 0-65535 $RHost --rate 1000"
+            		Invoke-Expression -Command $ScanArgs
 		}
 		if($QuickEnumScan -and $RHost)
 		{
