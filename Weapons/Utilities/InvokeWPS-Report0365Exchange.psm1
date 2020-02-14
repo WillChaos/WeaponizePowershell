@@ -18,6 +18,8 @@
   Author:         WillChaos
   Creation Date:  27/11/19
   Purpose/Change: 0365 reporting.
+.TargetOS
+  OS:ALL
 .NOISE
   This script isnt meant by any means to be evasive. It is built for reporting.
   This script is not memory dependant. It will Write to the disk, and install powershell modules and dependancies where required.
