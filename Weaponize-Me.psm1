@@ -31,7 +31,7 @@
 #----------------------------------------------------------[Declarations]----------------------------------------------------------
 # Location for WPS ZIP Master in gitgub
     $WPS_MasterLocation = "https://codeload.github.com/WillChaos/WeaponizePowershell/zip/master"
-
+    $CurrentOS          = [System.Environment]::OSVersion.Platform
 #-----------------------------------------------------------[Functions]------------------------------------------------------------
 Function WPSInvoke-WPSBanner
 {
@@ -76,7 +76,7 @@ Function WPSInvoke-SelfInmemory
   $ZipStream.Write($ZipBytes,0,$ZipBytes.Length)
   $ZipArchive = New-Object System.IO.Compression.ZipArchive($ZipStream)
   $ZippedContent = $ZipArchive.Entries
-
+  
   # opperate on each item in the zip
   foreach($Zippeditem in $ZippedContent)
   {
@@ -88,13 +88,13 @@ Function WPSInvoke-SelfInmemory
         $ItemContent  = $EntryReader.ReadToEnd()
 
         # handle Os dependant scripts - import only as NIX script if specified
-        if($ItemContent -like "*OS:NIX*")
+        if($ItemContent -like "*OS:NIX*" -and $CurrentOS -like "Unix")
         {
             #import ps module contents into this shell - targetting linux
             Write-Host "-[>] Importing module: "$Zippeditem.FullName  -ForegroundColor DarkGray
             Invoke-Expression $ItemContent
         }
-        if($ItemContent -like "*OS:WIN*")
+        if($ItemContent -like "*OS:WIN*" -and $CurrentOS -like "Win32NT")
         {
             #import ps module contents into this shell - targetting windows
             Write-Host "-[>] Importing module: "$Zippeditem.FullName -ForegroundColor DarkGray
