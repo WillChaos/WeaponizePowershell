@@ -1,3 +1,8 @@
+<#
+.TargetOS
+    OS:ALL
+#>
+
 Function Global:InvokeWPS-RSG()
 {
     param
