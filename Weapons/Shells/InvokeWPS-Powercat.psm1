@@ -1,10 +1,15 @@
-# INFO - simple Netcat alternative written natively in PS/.net
-# ----------------------------------------------------------
-# Author: https://github.com/besimorhino/powercat/
-# Thanks m8 
-# No point of re-inventing the wheel
-# -----------------------------------------------------------
+<#
+ # INFO - simple Netcat alternative written natively in PS/.net
+ # ----------------------------------------------------------
+ # Author: https://github.com/besimorhino/powercat/
+ # Thanks m8 
+ # No point of re-inventing the wheel
 
+ .TargetOS
+   OS:ALL
+
+ # -----------------------------------------------------------
+ #>
 
 function Global:InvokeWPS-Powercat
 {
