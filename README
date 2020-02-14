@@ -6,6 +6,7 @@
 # 3. will be built to automate redteam tasks, Blueteam tasks and some everyday tasks
 # 4. Should be 'windows defender-resistent'
 # 5. Weapons (importable functions) mostly are importable independantly as powershell modules
+# 6. OS Dependadnt modules should only imnport on targetted OS's
 
 # -------------------------------------Execution------------------------------------------------
   
