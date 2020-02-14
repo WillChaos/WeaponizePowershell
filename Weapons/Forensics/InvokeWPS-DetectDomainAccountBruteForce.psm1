@@ -1,14 +1,20 @@
-Function Global:InvokeWPS-DetectDomainAccountBruteForce()
-{
 <#
-     info: 
+     .INFO: 
      A Simple Script that perfroms a eventvwr lookup for account logon failuers and lockouts.
      This script works best on a central logging server or DC. 
      Script generally requires elevation to see the events.  nothing to fancy in this scrpt
-     Params: 
+     
+     .Params: 
      $hours - simply pass in how many hours to search back. so if you pass in 3, we will look over the past 3 hours
               for any lockouts/failed logins. Accepts floats ie 0.5 or 2.3
+     .TargetOS
+       OS:WIN      
+     
 #>
+
+Function Global:InvokeWPS-DetectDomainAccountBruteForce()
+{
+
     param
     (  
         [Parameter(Position=0,Mandatory=$true)]
