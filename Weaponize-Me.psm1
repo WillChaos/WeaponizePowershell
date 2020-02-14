@@ -91,14 +91,12 @@ Function WPSInvoke-SelfInmemory
         if($ItemContent -like "*OS:NIX*" -and $CurrentOS -notlike "Unix")
         {
             #import ps module contents into this shell - targetting linux
-            Write-Host "-[>] Skipping Windows exclusive module: "$Zippeditem.FullName  -ForegroundColor Gray
-            Invoke-Expression $ItemContent
+            Write-Verbose "-[X] Skipping Windows exclusive module: "$Zippeditem.FullName  
         }
         if($ItemContent -like "*OS:WIN*" -and $CurrentOS -notlike "Win32NT")
         {
             #import ps module contents into this shell - targetting windows
-            Write-Host "-[>] Skipping Linux exclusive module: "$Zippeditem.FullName -ForegroundColor Gray
-            Invoke-Expression $ItemContent
+            Write-Verbose "-[X] Skipping Linux exclusive module: "$Zippeditem.FullName 
         }
         else
         {
