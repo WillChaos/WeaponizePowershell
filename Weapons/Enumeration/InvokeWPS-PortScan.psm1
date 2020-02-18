@@ -53,7 +53,7 @@ Function Global:InvokeWPS-PortScan()
 			# nested if's just to prevent super long if statements
 			if( (Invoke-Expression -Command "nmap -h") -like "*https://nmap.org/book/man.html*")
 			{
-				Write-Host "[WPS] PreReqs Met"
+				#Write-Host "[WPS] PreReqs Met" - no longer needed. leaving in for one revision.
 				return $true
 			}
 			else
@@ -76,16 +76,48 @@ Function Global:InvokeWPS-PortScan()
 		if($VeryQuickScan -and $RHost)
 		{
 			Write-Host "[+]> Performing Very quick scan" -ForeGroundColor DarkGray
-            		$ScanArgs = "sudo masscan --ports 0-65535 $RHost --rate 1000"
-            		Invoke-Expression -Command $ScanArgs
+			
+			# start scan in a job 
+			$CommandExec = "sudo masscan --ports 0-65535 $RHost --rate 1000"
+			$thisJob = Start-Job -Name "ExecutionJob" -ScriptBlock {Invoke-Expression $using:CommandExec}
+			
+			# capture output of job live, and display it however  we like
+			while($thisJob.State -like "Running")
+			{
+			    Receive-Job -Job $thisJob -OutVariable JobContent -ErrorVariable $null -ErrorAction SilentlyContinue  -WarningAction SilentlyContinue | Out-Null 
+
+			    if($JobContent -like "*Discovered open port*")
+			    {
+                    	    	# if more then one port is discovered in this job
+                    	    	If(($JobContent -split(" ") | Select-String "Discovered").count -gt 1)
+                    		{
+                                	foreach($JContent in $JobContent)
+                        		{
+                            			Write-Host "-[X>] " $JContent
+                        		}
+                         
+                    		}
+                    		# Exactly one port is found
+                    		if(($JobContent -split(" ") | Select-String "Discovered").count -eq 1)
+                    		{
+                        		Write-Host "-[Y>] " $JobContent
+                    		}
+                    		else
+                    		{
+                        		# no portsd are found
+                        		Write-Host "fyi - no ports found. this can be removed when finished. found this: "$JobContent
+                    		}
+			    }  
+			}
+
 		}
 		if($QuickEnumScan -and $RHost)
 		{
-			Write-Host "[+]> Perfroming A Quick Scan + Quick Enum" -ForeGroundColor DarkGray
+			Write-Host "[+]> Performing A Quick Scan + Quick Enum" -ForeGroundColor DarkGray
 		}
 		if($SurfaceScan -and $RHost)
 		{
-			Write-Host "[+]> Perfroming A Surface scan. This may take a bit.. Grab a coffee.." -ForeGroundColor DarkGray
+			Write-Host "[+]> Performing A Surface scan. This may take a bit.. Grab a coffee.." -ForeGroundColor DarkGray
 		}
 		else
 		{
