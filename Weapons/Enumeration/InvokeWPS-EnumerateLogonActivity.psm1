@@ -28,8 +28,6 @@
       
 #>
 
-$ID = "4624"
-
 Function Global:InvokeWPS-EnumerateLogonActivity()
 {
 	param
@@ -62,7 +60,8 @@ Function Global:InvokeWPS-EnumerateLogonActivity()
 	)
     
     # ----------------------------------------------------------------Functions----------------------------------------------------------------------------
-
+    $ID = "4624"
+    
     Function Invoke-Banner()
     {
         Write-Host " __________________________________________________________________________________________________ " -ForegroundColor DarkGray
