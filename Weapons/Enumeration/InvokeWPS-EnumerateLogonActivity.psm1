@@ -35,11 +35,11 @@ Function Global:InvokeWPS-EnumerateLogonActivity()
 	param
 	(
     
-		[Parameter(Mandatory=$true)]
-		[String] $UserName,
+	[Parameter(Mandatory=$true)]
+	[String] $UserName,
         
         [Parameter(Mandatory=$true)]
-		[Int] $DaysToAudit,
+	[Int] $DaysToAudit,
 
         # login to console
         [Switch] $InteractiveLogins,
